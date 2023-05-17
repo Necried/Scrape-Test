@@ -30,7 +30,6 @@ async function hitScrape() {
     const page = await fetchTab();
     console.log(page);
     const results = page.match(/<p>(.+)<\/p>/);
-    chrome.storage.local.set({test: '1'});
     chrome.storage.local.set({results: `${results}`}, () => console.log("recorded"));!!
     console.log(results);
 }
