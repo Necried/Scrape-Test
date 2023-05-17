@@ -1,3 +1,20 @@
+window.onload = async function() {
+    document.getElementById("scrapeButton").addEventListener("click", hitScrape);
+    console.log("initialized")
+}
+
+async function hitScrape() {
+    const dom = document.documentElement.innerHTML;
+    const results = dom.match(/<p>(.+)<\/p>/);
+    chrome.storage.local.set({test: '1'});
+    chrome.storage.local.set({results: `${results}`}, () => console.log("recorded"));
+    console.log(results);
+}
+
+
+
+
+/*
 window.onload= async function(){
 
     console.log('Popup opened');
@@ -100,3 +117,4 @@ async function rightChange() {
 
 
 // https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/cny.json?d=2022-02-19
+*/
