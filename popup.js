@@ -1,17 +1,59 @@
 window.onload = async function() {
     document.getElementById("scrapeButton").addEventListener("click", hitScrape);
-    console.log("initialized")
+    console.log("initialized");
+}
+
+function fetchTab() {
+    var result = chrome.tabs.query({ active: true, currentWindow: true }).then(function (tabs) {
+        var activeTab = tabs[0];
+        var activeTabId = activeTab.id;
+
+        return chrome.scripting.executeScript({
+            target: { tabId: activeTabId },
+            // injectImmediately: true,  // uncomment this to make it execute straight away, other wise it will wait for document_idle
+            func: DOMtoString,
+            // args: ['body']  // you can use this to target what element to get the html for
+        });
+
+    }).then(function (results) {
+        console.log(results[0].result);
+        return results[0].result;
+    }).catch(function (error) {
+        console.log("error!");
+        return 'There was an error injecting script : \n' + error.message;
+    });
+
+    return result;
 }
 
 async function hitScrape() {
-    const dom = document.documentElement.innerHTML;
-    const results = dom.match(/<p>(.+)<\/p>/);
+    const page = await fetchTab();
+    console.log(page);
+    const results = page.match(/<p>(.+)<\/p>/);
     chrome.storage.local.set({test: '1'});
-    chrome.storage.local.set({results: `${results}`}, () => console.log("recorded"));
+    chrome.storage.local.set({results: `${results}`}, () => console.log("recorded"));!!
     console.log(results);
 }
 
+function DOMtoString(selector) {
+    if (selector) {
+        selector = document.querySelector(selector);
+        if (!selector) return "ERROR: querySelector failed to find node"
+    } else {
+        selector = document.documentElement;
+    }
+    return selector.outerHTML;
+}
 
+
+/*
+  async function getCurrentTab() {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  let [tab] = await chrome.tabs.query(queryOptions);
+  return tab;
+  }
+
+*/
 
 
 /*
