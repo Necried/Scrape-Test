@@ -3,6 +3,8 @@ window.onload = async function() {
     console.log("initialized");
 }
 
+// Source: https://stackoverflow.com/questions/11684454/getting-the-source-html-of-the-current-page-from-chrome-extension
+// Injects a script into the current open tab (DOMtoString) then messages it back to the popup
 function fetchTab() {
     var result = chrome.tabs.query({ active: true, currentWindow: true }).then(function (tabs) {
         var activeTab = tabs[0];
@@ -26,6 +28,8 @@ function fetchTab() {
     return result;
 }
 
+// TODO: Data extraction
+// Calls fetchTab to get HTML contents. Scrapes the HTML string and saves to chrome local storage
 async function hitScrape() {
     const page = await fetchTab();
     console.log(page);
@@ -34,6 +38,7 @@ async function hitScrape() {
     console.log(results);
 }
 
+// Script that is injected into the current tab to fetch the HTML contents
 function DOMtoString(selector) {
     if (selector) {
         selector = document.querySelector(selector);
