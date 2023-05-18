@@ -36,18 +36,18 @@ async function hitScrape() {
     // const results = page.match(/<p>(.+)<\/p>/);
     // const { document } = new JSDOM(page).window;
     // const results = document.getElementsByTagName("p"); 
-    chrome.storage.local.set({results: `${results}`}, () => console.log("recorded"));!!
+    chrome.storage.local.set({results: `${results}`}, () => console.log("recorded"));
     // console.log(results);
 }
 
 // Script that is injected into the current tab to fetch the HTML contents
 function DOMtoString() {
-    let selectors = ["li"];
+    let selectors = ["p", "li"];
     let result = "";
-    for (sel in selectors) {
-        tags = document.querySelectorAll("li");
-        tags.forEach((tag) => {result += tag.innerHTML;}
-                    );
+    for (let sel of selectors) {
+        tags = document.querySelectorAll(sel);
+        tags.forEach((tag) =>
+            {result += tag.innerHTML;});
     }
     // console.log(result);
     return result;
