@@ -1,3 +1,5 @@
+// const { JSDOM } = require("jsdom")
+
 window.onload = async function() {
     document.getElementById("scrapeButton").addEventListener("click", hitScrape);
     console.log("initialized");
@@ -14,7 +16,6 @@ function fetchTab() {
             target: { tabId: activeTabId },
             // injectImmediately: true,  // uncomment this to make it execute straight away, other wise it will wait for document_idle
             func: DOMtoString,
-            // args: ['body']  // you can use this to target what element to get the html for
         });
 
     }).then(function (results) {
@@ -31,22 +32,25 @@ function fetchTab() {
 // TODO: Data extraction
 // Calls fetchTab to get HTML contents. Scrapes the HTML string and saves to chrome local storage
 async function hitScrape() {
-    const page = await fetchTab();
-    console.log(page);
-    const results = page.match(/<p>(.+)<\/p>/);
+    const results = await fetchTab();
+    // const results = page.match(/<p>(.+)<\/p>/);
+    // const { document } = new JSDOM(page).window;
+    // const results = document.getElementsByTagName("p"); 
     chrome.storage.local.set({results: `${results}`}, () => console.log("recorded"));!!
-    console.log(results);
+    // console.log(results);
 }
 
 // Script that is injected into the current tab to fetch the HTML contents
-function DOMtoString(selector) {
-    if (selector) {
-        selector = document.querySelector(selector);
-        if (!selector) return "ERROR: querySelector failed to find node"
-    } else {
-        selector = document.documentElement;
+function DOMtoString() {
+    let selectors = ["li"];
+    let result = "";
+    for (sel in selectors) {
+        tags = document.querySelectorAll("li");
+        tags.forEach((tag) => {result += tag.innerHTML;}
+                    );
     }
-    return selector.outerHTML;
+    // console.log(result);
+    return result;
 }
 
 
