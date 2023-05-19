@@ -1,5 +1,15 @@
 // const { JSDOM } = require("jsdom")
 
+// Start the Elm application.
+var app = Elm.Main.init({
+    node: document.getElementById('myapp')
+});
+
+app.ports.sendMessage.subscribe(function(message) {
+    chrome.storage.local.set({results: `${message}`}, () => console.log("recorded"));
+});
+
+
 window.onload = async function() {
     document.getElementById("scrapeButton").addEventListener("click", hitScrape);
     console.log("initialized");
@@ -19,10 +29,10 @@ function fetchTab() {
         });
 
     }).then(function (results) {
-        console.log(results[0].result);
+        // console.log(results[0].result);
         return results[0].result;
     }).catch(function (error) {
-        console.log("error!");
+        // console.log("error!");
         return 'There was an error injecting script : \n' + error.message;
     });
 
@@ -33,10 +43,12 @@ function fetchTab() {
 // Calls fetchTab to get HTML contents. Scrapes the HTML string and saves to chrome local storage
 async function hitScrape() {
     const results = await fetchTab();
+    app.ports.messageReceiver.send(results);
+
     // const results = page.match(/<p>(.+)<\/p>/);
     // const { document } = new JSDOM(page).window;
     // const results = document.getElementsByTagName("p"); 
-    chrome.storage.local.set({results: `${results}`}, () => console.log("recorded"));
+    // chrome.storage.local.set({results: `${results}`}, () => console.log("recorded"));
     // console.log(results);
 }
 
@@ -50,7 +62,8 @@ function DOMtoString() {
             {result += tag.innerHTML;});
     }
     // console.log(result);
-    return result;
+    
+    return result; // document.documentElement.outerHTML;
 }
 
 
