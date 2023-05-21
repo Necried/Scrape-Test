@@ -5302,193 +5302,10 @@ var $author$project$Main$messageReceiver = _Platform_incomingPort('messageReceiv
 var $author$project$Main$subscriptions = function (_v0) {
 	return $author$project$Main$messageReceiver($author$project$Main$Recv);
 };
-var $elm$core$Set$Set_elm_builtin = function (a) {
-	return {$: 'Set_elm_builtin', a: a};
-};
-var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
-var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
-var $elm$core$Set$empty = $elm$core$Set$Set_elm_builtin($elm$core$Dict$empty);
-var $elm$core$Dict$Black = {$: 'Black'};
-var $elm$core$Dict$RBNode_elm_builtin = F5(
-	function (a, b, c, d, e) {
-		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
-	});
-var $elm$core$Dict$Red = {$: 'Red'};
-var $elm$core$Dict$balance = F5(
-	function (color, key, value, left, right) {
-		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
-			var _v1 = right.a;
-			var rK = right.b;
-			var rV = right.c;
-			var rLeft = right.d;
-			var rRight = right.e;
-			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
-				var _v3 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var lLeft = left.d;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
-					key,
-					value,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, lK, lV, lLeft, lRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rLeft, rRight));
-			} else {
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					color,
-					rK,
-					rV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, left, rLeft),
-					rRight);
-			}
-		} else {
-			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
-				var _v5 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var _v6 = left.d;
-				var _v7 = _v6.a;
-				var llK = _v6.b;
-				var llV = _v6.c;
-				var llLeft = _v6.d;
-				var llRight = _v6.e;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					$elm$core$Dict$Red,
-					lK,
-					lV,
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, lRight, right));
-			} else {
-				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
-			}
-		}
-	});
-var $elm$core$Basics$compare = _Utils_compare;
-var $elm$core$Dict$insertHelp = F3(
-	function (key, value, dict) {
-		if (dict.$ === 'RBEmpty_elm_builtin') {
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
-		} else {
-			var nColor = dict.a;
-			var nKey = dict.b;
-			var nValue = dict.c;
-			var nLeft = dict.d;
-			var nRight = dict.e;
-			var _v1 = A2($elm$core$Basics$compare, key, nKey);
-			switch (_v1.$) {
-				case 'LT':
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						A3($elm$core$Dict$insertHelp, key, value, nLeft),
-						nRight);
-				case 'EQ':
-					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
-				default:
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						nLeft,
-						A3($elm$core$Dict$insertHelp, key, value, nRight));
-			}
-		}
-	});
-var $elm$core$Dict$insert = F3(
-	function (key, value, dict) {
-		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
-		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
-			var _v1 = _v0.a;
-			var k = _v0.b;
-			var v = _v0.c;
-			var l = _v0.d;
-			var r = _v0.e;
-			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
-		} else {
-			var x = _v0;
-			return x;
-		}
-	});
-var $elm$core$Set$insert = F2(
-	function (key, _v0) {
-		var dict = _v0.a;
-		return $elm$core$Set$Set_elm_builtin(
-			A3($elm$core$Dict$insert, key, _Utils_Tuple0, dict));
-	});
-var $elm$core$Set$fromList = function (list) {
-	return A3($elm$core$List$foldl, $elm$core$Set$insert, $elm$core$Set$empty, list);
-};
-var $author$project$Main$myTagSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		['p', 'li']));
 var $elm$core$String$concat = function (strings) {
 	return A2($elm$core$String$join, '', strings);
 };
-var $elm$core$List$filter = F2(
-	function (isGood, list) {
-		return A3(
-			$elm$core$List$foldr,
-			F2(
-				function (x, xs) {
-					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
-				}),
-			_List_Nil,
-			list);
-	});
 var $elm$core$Debug$log = _Debug_log;
-var $elm$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1.$) {
-					case 'LT':
-						var $temp$targetKey = targetKey,
-							$temp$dict = left;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-					case 'EQ':
-						return $elm$core$Maybe$Just(value);
-					default:
-						var $temp$targetKey = targetKey,
-							$temp$dict = right;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-				}
-			}
-		}
-	});
-var $elm$core$Dict$member = F2(
-	function (key, dict) {
-		var _v0 = A2($elm$core$Dict$get, key, dict);
-		if (_v0.$ === 'Just') {
-			return true;
-		} else {
-			return false;
-		}
-	});
-var $elm$core$Set$member = F2(
-	function (key, _v0) {
-		var dict = _v0.a;
-		return A2($elm$core$Dict$member, key, dict);
-	});
 var $elm$core$Basics$composeL = F3(
 	function (g, f, x) {
 		return g(
@@ -6116,6 +5933,117 @@ var $hecrj$html_parser$Html$Parser$tagAttributeName = A2(
 var $hecrj$html_parser$Html$Parser$chompSemicolon = $elm$parser$Parser$chompIf(
 	$elm$core$Basics$eq(
 		_Utils_chr(';')));
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
+var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
+var $elm$core$Dict$Black = {$: 'Black'};
+var $elm$core$Dict$RBNode_elm_builtin = F5(
+	function (a, b, c, d, e) {
+		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
+	});
+var $elm$core$Dict$Red = {$: 'Red'};
+var $elm$core$Dict$balance = F5(
+	function (color, key, value, left, right) {
+		if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Red')) {
+			var _v1 = right.a;
+			var rK = right.b;
+			var rV = right.c;
+			var rLeft = right.d;
+			var rRight = right.e;
+			if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+				var _v3 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var lLeft = left.d;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Red,
+					key,
+					value,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					color,
+					rK,
+					rV,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, left, rLeft),
+					rRight);
+			}
+		} else {
+			if ((((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) && (left.d.$ === 'RBNode_elm_builtin')) && (left.d.a.$ === 'Red')) {
+				var _v5 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var _v6 = left.d;
+				var _v7 = _v6.a;
+				var llK = _v6.b;
+				var llV = _v6.c;
+				var llLeft = _v6.d;
+				var llRight = _v6.e;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Red,
+					lK,
+					lV,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, lRight, right));
+			} else {
+				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
+			}
+		}
+	});
+var $elm$core$Basics$compare = _Utils_compare;
+var $elm$core$Dict$insertHelp = F3(
+	function (key, value, dict) {
+		if (dict.$ === 'RBEmpty_elm_builtin') {
+			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+		} else {
+			var nColor = dict.a;
+			var nKey = dict.b;
+			var nValue = dict.c;
+			var nLeft = dict.d;
+			var nRight = dict.e;
+			var _v1 = A2($elm$core$Basics$compare, key, nKey);
+			switch (_v1.$) {
+				case 'LT':
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						A3($elm$core$Dict$insertHelp, key, value, nLeft),
+						nRight);
+				case 'EQ':
+					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
+				default:
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						nLeft,
+						A3($elm$core$Dict$insertHelp, key, value, nRight));
+			}
+		}
+	});
+var $elm$core$Dict$insert = F3(
+	function (key, value, dict) {
+		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
+		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
+			var _v1 = _v0.a;
+			var k = _v0.b;
+			var v = _v0.c;
+			var l = _v0.d;
+			var r = _v0.e;
+			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
+		} else {
+			var x = _v0;
+			return x;
+		}
+	});
 var $elm$core$Dict$fromList = function (assocs) {
 	return A3(
 		$elm$core$List$foldl,
@@ -8257,6 +8185,37 @@ var $hecrj$html_parser$Html$Parser$NamedCharacterReferences$dict = $elm$core$Dic
 			_Utils_Tuple2('zwj', '\u200D'),
 			_Utils_Tuple2('zwnj', '\u200C')
 		]));
+var $elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			if (dict.$ === 'RBEmpty_elm_builtin') {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
+				switch (_v1.$) {
+					case 'LT':
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 'EQ':
+						return $elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
+			}
+		}
+	});
 var $elm$core$Maybe$withDefault = F2(
 	function (_default, maybe) {
 		if (maybe.$ === 'Just') {
@@ -9048,50 +9007,52 @@ var $hecrj$html_parser$Html$Parser$run = function (str) {
 		A2($hecrj$html_parser$Html$Parser$oneOrMore, 'node', $hecrj$html_parser$Html$Parser$node),
 		str);
 };
-var $author$project$Main$scrapeTags = F2(
-	function (tagSet, s) {
-		var elementFilter = function (node) {
-			if (node.$ === 'Element') {
-				return true;
-			} else {
-				return false;
-			}
-		};
-		var extractTags = function (node) {
-			switch (node.$) {
-				case 'Element':
-					var tag = node.a;
-					var moreNodes = node.c;
-					return A2($elm$core$Set$member, tag, tagSet) ? $elm$core$String$concat(
-						A2($elm$core$List$map, extractTags, moreNodes)) : $elm$core$String$concat(
-						A2(
-							$elm$core$List$map,
-							extractTags,
-							A2($elm$core$List$filter, elementFilter, moreNodes)));
-				case 'Text':
-					var txt = node.a;
-					return txt;
-				default:
-					return '';
-			}
-		};
-		var _v1 = $hecrj$html_parser$Html$Parser$run(
-			A2($elm$core$Debug$log, 'myhtml', s));
-		if (_v1.$ === 'Err') {
-			return 'Error: Failed to parse HTML string';
-		} else {
-			var doc = _v1.a;
-			return A2(
-				$elm$core$Debug$log,
-				'scraped',
-				$author$project$Main$removeNewlines(
-					$elm$core$String$concat(
-						A2(
-							$elm$core$List$map,
-							extractTags,
-							A2($elm$core$Debug$log, 'doc', doc)))));
+var $author$project$Main$scrapeTags = function (s) {
+	var extractTags = function (node) {
+		switch (node.$) {
+			case 'Element':
+				var tag = node.a;
+				var attr = node.b;
+				var moreNodes = node.c;
+				var _v1 = _Utils_Tuple2(tag, attr);
+				if (((_v1.a === 'a') && _v1.b.b) && (_v1.b.a.a === 'href')) {
+					var _v2 = _v1.b;
+					var _v3 = _v2.a;
+					var hyperlink = _v3.b;
+					return A2(
+						$elm$core$String$join,
+						' ',
+						A2($elm$core$List$map, extractTags, moreNodes)) + ('(' + (hyperlink + ')'));
+				} else {
+					return A2(
+						$elm$core$String$join,
+						' ',
+						A2($elm$core$List$map, extractTags, moreNodes));
+				}
+			case 'Text':
+				var txt = node.a;
+				return txt;
+			default:
+				return '';
 		}
-	});
+	};
+	var _v4 = $hecrj$html_parser$Html$Parser$run(
+		A2($elm$core$Debug$log, 'myhtml', s));
+	if (_v4.$ === 'Err') {
+		return 'Error: Failed to parse HTML string';
+	} else {
+		var doc = _v4.a;
+		return A2(
+			$elm$core$Debug$log,
+			'scraped',
+			$author$project$Main$removeNewlines(
+				$elm$core$String$concat(
+					A2(
+						$elm$core$List$map,
+						extractTags,
+						A2($elm$core$Debug$log, 'doc', doc)))));
+	}
+};
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Main$sendMessage = _Platform_outgoingPort('sendMessage', $elm$json$Json$Encode$string);
 var $author$project$Main$update = F2(
@@ -9100,7 +9061,7 @@ var $author$project$Main$update = F2(
 		return _Utils_Tuple2(
 			_Utils_Tuple0,
 			$author$project$Main$sendMessage(
-				A2($author$project$Main$scrapeTags, $author$project$Main$myTagSet, message)));
+				$author$project$Main$scrapeTags(message)));
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $author$project$Main$view = function (model) {

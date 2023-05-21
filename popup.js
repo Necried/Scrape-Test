@@ -54,18 +54,38 @@ async function hitScrape() {
 
 // Script that is injected into the current tab to fetch the HTML contents
 function DOMtoString() {
-    let selectors = ["p", "li"];
+    /*
+    let unsupportedTags = ["script", "svg"];
+    for (let sel of unsupportedTags) {
+        tagsBody = document.querySelectorAll(sel);
+        tagsBody.forEach((elem) => {
+            elem.remove();
+        })
+    }
+    */
+    let selectors = ["p"]
     let result = "";
     for (let sel of selectors) {
-        tags = document.querySelectorAll(sel);
-        tags.forEach((tag) =>
-            {result += tag.innerHTML;});
+        tagsBody = document.querySelectorAll(sel);
+        tagsBody.forEach((tag) => {
+            result += tag.innerHTML;
+        });
     }
-    // console.log(result);
+    console.log(result);
     
     return result; // document.documentElement.outerHTML;
 }
 
+function removeUnwantedTags() {
+    let unsupportedTags = ["script", "svg"];
+    for (let sel of unsupportedTags) {
+        tagsBody = document.querySelectorAll(sel);
+        tagsBody.forEach((elem) => {
+            elem.remove();
+        })
+    }
+    console.log(document);
+}
 
 /*
   async function getCurrentTab() {
