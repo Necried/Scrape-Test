@@ -5305,7 +5305,6 @@ var $author$project$Main$subscriptions = function (_v0) {
 var $elm$core$String$concat = function (strings) {
 	return A2($elm$core$String$join, '', strings);
 };
-var $elm$core$Debug$log = _Debug_log;
 var $elm$core$Basics$composeL = F3(
 	function (g, f, x) {
 		return g(
@@ -9036,21 +9035,14 @@ var $author$project$Main$scrapeTags = function (s) {
 				return '';
 		}
 	};
-	var _v4 = $hecrj$html_parser$Html$Parser$run(
-		A2($elm$core$Debug$log, 'myhtml', s));
+	var _v4 = $hecrj$html_parser$Html$Parser$run(s);
 	if (_v4.$ === 'Err') {
 		return 'Error: Failed to parse HTML string';
 	} else {
 		var doc = _v4.a;
-		return A2(
-			$elm$core$Debug$log,
-			'scraped',
-			$author$project$Main$removeNewlines(
-				$elm$core$String$concat(
-					A2(
-						$elm$core$List$map,
-						extractTags,
-						A2($elm$core$Debug$log, 'doc', doc)))));
+		return $author$project$Main$removeNewlines(
+			$elm$core$String$concat(
+				A2($elm$core$List$map, extractTags, doc)));
 	}
 };
 var $elm$json$Json$Encode$string = _Json_wrap;

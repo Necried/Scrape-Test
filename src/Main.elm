@@ -116,17 +116,16 @@ scrapeTags s =
                 Comment _ ->
                     ""
     in
-    case run (Debug.log "myhtml" s) of
+    case run s of
         Err _ ->
             "Error: Failed to parse HTML string"
 
         Ok doc ->
-            Debug.log "doc" doc
-                -- Tuple.second <| doc.document
+            doc
                 |> List.map extractTags
                 |> String.concat
                 |> removeNewlines
-                |> Debug.log "scraped"
+                -- |> Debug.log "scraped"
 
 
 removeNewlines : String -> String

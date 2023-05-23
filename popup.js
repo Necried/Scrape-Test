@@ -6,13 +6,13 @@ var app = Elm.Main.init({
 });
 
 app.ports.sendMessage.subscribe(function(message) {
-    chrome.storage.local.set({results: `${message}`}, () => console.log("recorded"));
+    chrome.storage.local.set({results: `${message}`}); // () => console.log("recorded"));
 });
 
 
 window.onload = async function() {
     document.getElementById("scrapeButton").addEventListener("click", hitScrape);
-    console.log("initialized");
+    // console.log("initialized");
 }
 
 // Source: https://stackoverflow.com/questions/11684454/getting-the-source-html-of-the-current-page-from-chrome-extension
@@ -71,7 +71,7 @@ function DOMtoString() {
             result += tag.innerHTML;
         });
     }
-    console.log(result);
+    // console.log(result);
     
     return result; // document.documentElement.outerHTML;
 }
@@ -84,7 +84,7 @@ function removeUnwantedTags() {
             elem.remove();
         })
     }
-    console.log(document);
+    // console.log(document);
 }
 
 /*
